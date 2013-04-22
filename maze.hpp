@@ -1,5 +1,3 @@
-#include <iostream>
-
 class Maze {
 public:
   bool **blocks;
@@ -25,8 +23,6 @@ void Maze::gen(int x, int y) {
   int by = 2 * y + 1;
   int vx = x + 1;
   int vy = y + 1;
-
-  std::cout << "x: " << x << " - y: " << y << std::endl;
 
   blocks[bx][by] = false;
   visited[vx][vy] = true;
