@@ -2,10 +2,15 @@ class Maze {
 public:
   bool **blocks;
 private:
+  int vw;
+  int vh;
+  int ow;
+  int oh;
   bool **visited;
   void gen(int x, int y);
 public:
   Maze();
+  ~Maze();
   bool hasGenerated;
   int width;
   int height;
@@ -16,6 +21,15 @@ Maze::Maze() {
   hasGenerated = false;
   width = 0;
   height = 0;
+}
+
+Maze::~Maze() {
+  for(int i = 0; i < width; ++i)
+    delete[] blocks[i];
+  delete[] blocks;
+  for(int i = 0; i < vw; ++i)
+    delete[] visited[i];
+  delete[] visited;
 }
 
 void Maze::gen(int x, int y) {
@@ -49,15 +63,19 @@ void Maze::gen(int x, int y) {
 }
 
 void Maze::generate(int w, int h) {
+  ow = w;
+  oh = h;
+  vw = w + 2;
+  vh = h + 2;
   width = w * 2 + 1;
   height = h * 2 + 1;
 
-  blocks = new bool*[w * 2 + 1];
-  for(int i = 0; i < w * 2 + 1; ++i)
-    blocks[i] = new bool[h * 2 + 1];
-  visited = new bool*[w + 2];
-  for(int i = 0; i < w + 2; ++i)
-    visited[i] = new bool[h + 2];
+  blocks = new bool*[width];
+  for(int i = 0; i < width; ++i)
+    blocks[i] = new bool[height];
+  visited = new bool*[vw];
+  for(int i = 0; i < vw; ++i)
+    visited[i] = new bool[vh];
   
   for(int i = 0; i < w * 2 + 1; ++i)
     for(int j = 0; j < h * 2 + 1; ++j)
@@ -68,4 +86,5 @@ void Maze::generate(int w, int h) {
       visited[i][j] = i == 0 || i == w + 1 || j == 0 || j == h + 1;
 
   gen(0, 0);
+  hasGenerated = true;
 }

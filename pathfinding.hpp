@@ -22,6 +22,7 @@ private:
   vector<Vector2i> reconstructPath(Vector2i pos);
   int getCellIndexIn(Vector2i cell, vector<Vector2i> list);
 public:
+  ~Pathfinder();
   vector<Vector2i> findPath(Vector2i startPos, Vector2i endPos, bool **tiles, int width, int height);
 };
 
@@ -130,4 +131,17 @@ vector<Vector2i> Pathfinder::findPath(Vector2i startPos, Vector2i endPos, bool *
 
   vector<Vector2i> path;
   return path;
+}
+
+Pathfinder::~Pathfinder() {
+  for(int i = 0; i < mapWidth; ++i) {
+    delete[] gScore[i];
+    delete[] fScore[i];
+    delete[] hScore[i];
+    delete[] cameFrom[i];
+  }
+  delete[] gScore;
+  delete[] fScore;
+  delete[] hScore;
+  delete[] cameFrom;
 }

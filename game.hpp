@@ -13,10 +13,16 @@ private:
   Pathfinder pathfinder;
   std::vector<Vector2i> path;
 public:
+  ~Game();
   void doInit(RenderWindow &window);
   void doUpdate(RenderWindow &window);
   void doDraw(RenderWindow &window);
 };
+
+Game::~Game() {
+  delete draw;
+  delete gameGrid;
+}
 
 void Game::doInit(RenderWindow &window) {
   draw = new Draw(&window);
