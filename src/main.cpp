@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
-#include "game.hpp"
-#include "constants.hpp"
+#include "game.h"
+#include "constants.h"
 using namespace sf;
 
 Game game;

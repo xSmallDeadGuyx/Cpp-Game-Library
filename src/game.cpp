@@ -1,23 +1,11 @@
-#include <SFML/Graphics.hpp>
-#include "constants.hpp"
-#include "draw.hpp"
-#include "maze.hpp"
-#include "pathfinding.hpp"
-using namespace sf;
+#include "game.h"
 
-class Game {
-private:
-  Vector2i player;
-  Draw *draw;
-  Maze *gameGrid;
-  Pathfinder pathfinder;
-  std::vector<Vector2i> path;
-public:
-  ~Game();
-  void doInit(RenderWindow &window);
-  void doUpdate(RenderWindow &window);
-  void doDraw(RenderWindow &window);
-};
+#include <SFML/Graphics.hpp>
+#include "constants.h"
+#include "draw.h"
+#include "maze.h"
+#include "pathfinding.h"
+using namespace sf;
 
 Game::~Game() {
   delete draw;
