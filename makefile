@@ -1,4 +1,4 @@
-SRCS = main.cpp game.hpp constants.hpp draw.hpp
+SRCS = main.cpp game.hpp constants.hpp draw.hpp pathfinding.hpp
 EXE = game
 
 BIN = bin

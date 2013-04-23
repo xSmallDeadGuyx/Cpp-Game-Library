@@ -2,6 +2,7 @@
 #include "constants.hpp"
 #include "draw.hpp"
 #include "maze.hpp"
+#include "pathfinding.hpp"
 using namespace sf;
 
 class Game {
@@ -9,6 +10,8 @@ private:
   Vector2i player;
   Draw *draw;
   Maze *gameGrid;
+  Pathfinder pathfinder;
+  std::vector<Vector2i> path;
 public:
   void doInit(RenderWindow &window);
   void doUpdate(RenderWindow &window);
@@ -53,14 +56,22 @@ void Game::doUpdate(RenderWindow &window) {
 	break;
       }
       break;
+    case Event::MouseButtonPressed:
+      switch(event.mouseButton.button) {
+      case Mouse::Left:
+	path = pathfinder.findPath(player, Vector2i(event.mouseButton.x / 16, event.mouseButton.y / 16), gameGrid->blocks, gameGrid->width, gameGrid->height);
+	break;
+      }
     }
   }
 }
 
 void Game::doDraw(RenderWindow &window) {
-  for(int i = 0; i < gameGrid->width; i++)
-    for(int j = 0; j < gameGrid->height; j++)
+  for(int i = 0; i < gameGrid->width; ++i)
+    for(int j = 0; j < gameGrid->height; ++j)
       if(gameGrid->blocks[i][j])
 	draw->rectangle(Vector2f(i * 16, j * 16), Vector2f(16, 16), Color::Red);
+  for(int i = 0; i < path.size(); ++i)
+    draw->rectangle(Vector2f(path[i].x * 16, path[i].y * 16), Vector2f(16, 16), Color::Blue);
   draw->rectangle(Vector2f(player.x * 16, player.y * 16), Vector2f(16, 16), Color::Green);
 }
