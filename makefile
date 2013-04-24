@@ -1,16 +1,19 @@
 PROJ_NAME = game-test
 
+BIN_DIR = bin
+BIN = game
+
 CPP = g++
 OBJ_DIR = obj
 
 SRCS = $(wildcard src/*.cpp)
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.cpp=.o))
-DIRS = $(sort $(dir $(OBJS)))
+DIRS = $(sort $(dir $(OBJS))) $(BIN_DIR)
 DEPENDENCIES = $(OBJS:.o=.d)
 INCLUDES = -Iinc/
 LIBS = -lsfml-graphics -lsfml-window -lsfml-system
 CPPFLAGS = $(INCLUDES) -g
-LDFLAGS = -g $(LIBS) -pthread -o $(PROJ_NAME)
+LDFLAGS = -g $(LIBS) -pthread -o $(BIN_DIR)/$(BIN)
 
 all: $(PROJ_NAME)
 
@@ -43,5 +46,6 @@ $(DIRS):
 clean:
 	rm -f $(OBJS)
 	rm -f $(DEPENDENCIES)
-	rm -f $(PROJ_NAME)
+	rm -f $(BIN_DIR)/$(BIN)
+	rm -rf $(BIN_DIR)
 	rm -rf $(OBJ_DIR)
